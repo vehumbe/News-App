@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const NewsApp());
+}
+
+class NewsApp extends StatelessWidget {
+  const NewsApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Simple News App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const NewsHomePage(),
+    );
+  }
+}
+
+class NewsHomePage extends StatelessWidget {
+  const NewsHomePage({super.key});
+
+  final List<Map<String, String>> news = const [
+    {
+      "title": "Breaking News: Flutter 3.0 Released",
+      "description":
+          "Flutter 3.0 comes with amazing new features for developers.",
+    },
+    {
+      "title": "Tech Trends 2025",
+      "description": "Explore the top technology trends for the year 2025.",
+    },
+    {
+      "title": "AI in Everyday Life",
+      "description": "How artificial intelligence is shaping the future.",
+    },
+    {
+      "title": "Space Exploration Updates",
+      "description": "New missions planned to explore the outer planets.",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Simple News App'),
+      ),
+      body: ListView.builder(
+        itemCount: news.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: const EdgeInsets.all(10),
+            child: ListTile(
+              title: Text(news[index]['title']!),
+              subtitle: Text(news[index]['description']!),
+              leading: const Icon(Icons.article, color: Colors.blue),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(news[index]['title']!),
+                    content: Text(news[index]['description']!),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
